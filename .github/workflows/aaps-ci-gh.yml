@@ -64,6 +64,7 @@ jobs:
   build:
     name: Build AAPS
     runs-on: ubuntu-latest
+    environment: ${{ vars.Release }}
     steps:
       - name: Decode Secrets Keystore Set and Oauth2 to Env
         run: |
@@ -95,7 +96,6 @@ jobs:
             echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
           fi
           echo "GDRIVE_OAUTH2=${{ secrets.GDRIVE_OAUTH2 }}" >> $GITHUB_ENV
-
       - name: Check Secrets
         run: |
           echo "🔍 Checking required secrets..."
@@ -250,7 +250,7 @@ jobs:
           release_name: Release ${{ env.VERSION }}${{ env.VERSION_SUFFIX }}
           draft: false
           prerelease: false
-          repo: ${{ secrets.RELEASE_REPO }}
+          repo: ${{ vars.RELEASE_REPO }}
       # upload to github release
       - name: Upload Release Asset
         id: upload-release-asset
